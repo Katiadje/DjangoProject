@@ -4,14 +4,13 @@
 
 {% block content %}
   <h2>Bienvenue sur la plateforme Sakila ! 🎬🌍</h2>
-  <p>Explorez facilement les informations sur les pays, les villes, et découvrez notre collection de films.</p>
+<p>Explorez facilement les informations sur les pays et les villes du monde pour approfondir votre culture générale.</p>
 
   <div style="margin-top: 2rem; padding: 1rem; background-color: #e9f0ff; border-radius: 8px;">
     <h3>Que souhaitez-vous faire ?</h3>
     <ul style="list-style: none; padding-left: 0; font-size: 1.1rem;">
       <li><a href="{% url 'countries' %}" style="color: #007bff; text-decoration: underline;">📌 Voir la liste des pays</a></li>
       <li><a href="{% url 'cities' %}" style="color: #007bff; text-decoration: underline;">🏙️ Explorer les villes</a></li>
-      <li><a href="{% url 'films' %}" style="color: #007bff; text-decoration: underline;">🎥 Découvrir les films</a></li>
     </ul>
   </div>
 

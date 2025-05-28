@@ -1,23 +1,16 @@
-version: '3.8'
-
 services:
   db:
     image: mysql:8.0
-    container_name: mysql_db
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: djangoproject   # idem que DB_NAME dans web/env
-      MYSQL_USER: myuser
-      MYSQL_PASSWORD: mypassword
+      MYSQL_DATABASE: django_db
+      MYSQL_USER: django_user
+      MYSQL_PASSWORD: django_password
     ports:
-      - "3307:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
+      - "3307:3306" 
 
   web:
     build: .
-    container_name: django_app
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
@@ -26,10 +19,8 @@ services:
     depends_on:
       - db
     environment:
-      DB_HOST: db
-      DB_NAME: djangoproject
-      DB_USER: myuser
-      DB_PASSWORD: mypassword
-
-volumes:
-  mysql_data:
+      - DB_NAME=django_db
+      - DB_USER=django_user
+      - DB_PASSWORD=django_password
+      - DB_HOST=db
+      - DB_PORT=3306

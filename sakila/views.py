@@ -1,7 +1,7 @@
 # views.py
 import base64
 from django.shortcuts import render, get_object_or_404
-from .models import Country, City, Film
+from .models import Country, City
 
 def countries(request):
     countries = Country.objects.all()
@@ -38,7 +38,3 @@ def city_detail(request, city_id):
 
 def banner(request):
     return render(request, 'banner.html')
-
-def films(request):
-    films = Film.objects.all()
-    return render(request, 'films.html', {'films': films})

@@ -3,13 +3,86 @@
 {% block title %}Détails de la ville{% endblock %}
 
 {% block content %}
-<div style="text-align: center; padding: 2rem;">
-  <h2>{{ city.city }}</h2>
+<style>
+  .city-detail-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #f9fafb;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #2c3e50;
+  }
+  .city-title {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #34495e;
+  }
+  .city-image {
+    display: block;
+    max-width: 100%;
+    max-height: 300px;
+    margin: 0 auto 2rem auto;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    object-fit: cover;
+  }
+  .info-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .info-list li {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+  }
+  .info-label {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+  .capital-yes {
+    color: #27ae60;
+    font-weight: 700;
+  }
+  .capital-no {
+    color: #c0392b;
+    font-weight: 700;
+  }
+  .no-image-message {
+    text-align: center;
+    font-style: italic;
+    color: #7f8c8d;
+    margin-bottom: 2rem;
+  }
+</style>
+
+<div class="city-detail-container">
+  <h2 class="city-title">{{ city.city }}</h2>
   
   {% if city.picture_base64 %}
-    <img src="data:image/jpeg;base64,{{ city.picture_base64 }}" alt="Image de {{ city.city }}" style="max-width: 300px; border-radius: 10px; box-shadow: 0 0 10px #ccc;">
+    <img 
+      src="data:image/jpeg;base64,{{ city.picture_base64 }}" 
+      alt="Image de {{ city.city }}" 
+      class="city-image"
+    >
   {% else %}
-    <p><em>Aucune image disponible pour cette ville.</em></p>
+    <p class="no-image-message">Aucune image disponible pour cette ville.</p>
   {% endif %}
+  
+  <ul class="info-list">
+    <li><span class="info-label">Pays (ID) :</span> {{ city.country_id }}</li>
+    <li><span class="info-label">Dernière mise à jour :</span> {{ city.last_update|date:"d/m/Y H:i" }}</li>
+    <li>
+      <span class="info-label">Capitale :</span>
+      {% if city.capital %}
+        <span class="capital-yes">Oui</span>
+      {% else %}
+        <span class="capital-no">Non</span>
+      {% endif %}
+    </li>
+  </ul>
 </div>
 {% endblock %}
