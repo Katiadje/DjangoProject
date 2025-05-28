@@ -1,0 +1,15 @@
+<!-- sakila/templates/countries.html -->
+{% extends "base.html" %}
+
+{% block title %}Countries{% endblock %}
+
+{% block content %}
+<h2>Countries List</h2>
+<ul>
+  {% for country in countries %}
+    <li>{{ country.country_id }}. {{ country.country }}</li>
+  {% empty %}
+    <li>Aucun pays disponible.</li>
+  {% endfor %}
+</ul>
+{% endblock content %}

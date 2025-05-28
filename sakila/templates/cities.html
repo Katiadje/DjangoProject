@@ -1,0 +1,15 @@
+<!-- sakila/templates/cities.html -->
+{% extends "base.html" %}
+
+{% block title %}Cities{% endblock %}
+
+{% block content %}
+<h2>Liste des Villes</h2>
+<ul>
+  {% for city in cities %}
+    <li>{{ city }} — <strong>{{ city.country }}</strong></li>
+  {% empty %}
+    <li>Aucune ville trouvée.</li>
+  {% endfor %}
+</ul>
+{% endblock content %}
