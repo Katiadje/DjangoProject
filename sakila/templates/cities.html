@@ -1,15 +1,130 @@
-<!-- sakila/templates/cities.html -->
 {% extends "base.html" %}
-
-{% block title %}Cities{% endblock %}
+{% block title %}Villes{% endblock %}
 
 {% block content %}
-<h2>Liste des Villes</h2>
-<ul>
-  {% for city in cities %}
-    <li>{{ city }} — <strong>{{ city.country }}</strong></li>
-  {% empty %}
-    <li>Aucune ville trouvée.</li>
-  {% endfor %}
-</ul>
-{% endblock content %}
+<style>
+  /* Ton style existant */
+  .filter-buttons {
+    margin-bottom: 1.5rem;
+  }
+
+  .filter-buttons a {
+    padding: 0.6rem 1.2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    color: white;
+    background-color: #6c757d;
+    margin-right: 1rem;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+  }
+
+  .filter-buttons a.active,
+  .filter-buttons a:hover {
+    background-color: #007bff;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+  }
+
+  thead {
+    background-color: #343a40;
+    color: white;
+  }
+
+  th, td {
+    padding: 12px 15px;
+    border: 1px solid #dee2e6;
+    text-align: left;
+    vertical-align: middle;
+  }
+
+  th.capital, td.capital {
+    text-align: center;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+  }
+
+  tbody tr:hover {
+    background-color: #e9ecef;
+  }
+
+  tbody td a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 600;
+  }
+
+  tbody td a:hover {
+    text-decoration: underline;
+  }
+
+  .details-link {
+    font-size: 0.9em;
+    display: block;
+    margin-top: 5px;
+  }
+
+  .thumbnail {
+    max-width: 60px;
+    max-height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+  .city-name-container {
+    display: flex;
+    align-items: center;
+  }
+</style>
+
+<h2 style="text-align: center;">Liste des villes</h2>
+
+<div class="filter-buttons">
+  <a href="{% url 'cities' %}?show=all" class="{% if show == 'all' %}active{% endif %}">Toutes les villes</a>
+  <a href="{% url 'cities' %}?show=capitals" class="{% if show == 'capitals' %}active{% endif %}">Capitales uniquement</a>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Ville</th>
+      <th>Pays</th>
+      <th class="capital">Capital</th>
+      <th>Image disponible</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for city in cities %}
+    <tr>
+      <td>
+        <div class="city-name-container">
+          {% if city.picture_base64 %}
+            <img src="data:image/jpeg;base64,{{ city.picture_base64 }}" alt="Image de {{ city.city }}" class="thumbnail" />
+          {% endif %}
+          <div>
+            {{ city.city }}
+            <a href="{% url 'city_detail' city.city_id %}" class="details-link"> Détails de la ville</a>
+          </div>
+        </div>
+      </td>
+      <td>{{ city.country.country }}</td>
+      <td class="capital">{% if city.capital %}{% else %}{% endif %}</td>
+      
+      <td>{% if city.has_picture %}Oui{% else %}Non{% endif %}</td>
+
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">Aucune ville trouvée.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
