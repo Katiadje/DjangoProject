@@ -7,11 +7,11 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: sportive_db
+      MYSQL_DATABASE: djangoproject   # idem que DB_NAME dans web/env
       MYSQL_USER: myuser
       MYSQL_PASSWORD: mypassword
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
@@ -26,10 +26,10 @@ services:
     depends_on:
       - db
     environment:
-      - DB_HOST=db
-      - DB_NAME=djangoproject
-      - DB_USER=myuser
-      - DB_PASSWORD=1234
+      DB_HOST: db
+      DB_NAME: djangoproject
+      DB_USER: myuser
+      DB_PASSWORD: mypassword
 
 volumes:
   mysql_data:

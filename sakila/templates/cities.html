@@ -3,7 +3,7 @@
 
 {% block content %}
 <style>
-  /* Container */
+  /* Ton style existant */
   .filter-buttons {
     margin-bottom: 1.5rem;
   }
@@ -14,7 +14,7 @@
     text-decoration: none;
     font-weight: 600;
     color: white;
-    background-color: #6c757d; /* gris par défaut */
+    background-color: #6c757d;
     margin-right: 1rem;
     transition: background-color 0.3s ease;
     display: inline-block;
@@ -22,10 +22,9 @@
 
   .filter-buttons a.active,
   .filter-buttons a:hover {
-    background-color: #007bff; /* bleu vif */
+    background-color: #007bff;
   }
 
-  /* Table styles */
   table {
     width: 100%;
     border-collapse: collapse;
@@ -33,7 +32,7 @@
   }
 
   thead {
-    background-color: #343a40; /* gris foncé */
+    background-color: #343a40;
     color: white;
   }
 
@@ -41,6 +40,7 @@
     padding: 12px 15px;
     border: 1px solid #dee2e6;
     text-align: left;
+    vertical-align: middle;
   }
 
   th.capital, td.capital {
@@ -48,14 +48,13 @@
   }
 
   tbody tr:nth-child(even) {
-    background-color: #f8f9fa; /* gris clair */
+    background-color: #f8f9fa;
   }
 
   tbody tr:hover {
     background-color: #e9ecef;
   }
 
-  /* Lien dans le tableau */
   tbody td a {
     color: #007bff;
     text-decoration: none;
@@ -64,6 +63,26 @@
 
   tbody td a:hover {
     text-decoration: underline;
+  }
+
+  .details-link {
+    font-size: 0.9em;
+    display: block;
+    margin-top: 5px;
+  }
+
+  .thumbnail {
+    max-width: 60px;
+    max-height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+
+  .city-name-container {
+    display: flex;
+    align-items: center;
   }
 </style>
 
@@ -85,7 +104,17 @@
   <tbody>
     {% for city in cities %}
     <tr>
-      <td><a href="{% url 'city_detail' city.city_id %}">{{ city.city }}</a></td>
+      <td>
+        <div class="city-name-container">
+          {% if city.picture_base64 %}
+            <img src="data:image/jpeg;base64,{{ city.picture_base64 }}" alt="Image de {{ city.city }}" class="thumbnail" />
+          {% endif %}
+          <div>
+            {{ city.city }}
+            <a href="{% url 'city_detail' city.city_id %}" class="details-link">🔍 Détails de la ville</a>
+          </div>
+        </div>
+      </td>
       <td>{{ city.country.country }}</td>
       <td class="capital">{% if city.capital %}✔️{% else %}❌{% endif %}</td>
     </tr>

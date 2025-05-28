@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Détails de la ville{% endblock %}
+
+{% block content %}
+<div style="text-align: center; padding: 2rem;">
+  <h2>{{ city.city }}</h2>
+  
+  {% if city.picture_base64 %}
+    <img src="data:image/jpeg;base64,{{ city.picture_base64 }}" alt="Image de {{ city.city }}" style="max-width: 300px; border-radius: 10px; box-shadow: 0 0 10px #ccc;">
+  {% else %}
+    <p><em>Aucune image disponible pour cette ville.</em></p>
+  {% endif %}
+</div>
+{% endblock %}

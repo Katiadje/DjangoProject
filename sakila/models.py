@@ -19,7 +19,8 @@ class City(models.Model):
     city_id = models.AutoField(primary_key=True)
     city = models.CharField(max_length=50, unique=True)
     country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='cities')
-    capital = models.BooleanField(default=False)  # <-- ici capital au lieu de is_capital
+    capital = models.BooleanField(default=False)
+    picture = models.ImageField(upload_to='city_pictures/', blank=True, null=True)  # <-- ici
     last_update = models.DateTimeField(auto_now=True)
 
     class Meta:
